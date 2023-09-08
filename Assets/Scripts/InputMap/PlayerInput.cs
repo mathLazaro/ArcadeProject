@@ -6,15 +6,15 @@ using UnityEngine.InputSystem;
 public class PlayerInput : MonoBehaviour
 {
     private InputMap input;
-    public static float inputAcelerar;
-    public static Vector2 inputVirar;
-    public static float inputFrear;
-    public static float inputDerrapar;
+    public static float acelerar;
+    public static Vector2 virar;
+    public static float frear;
+    public static float derrapar;
 
     private void Awake() {
         input = new InputMap();
-        inputAcelerar = inputDerrapar = inputFrear = 0f;
-        inputVirar = new Vector2(0,0);
+        acelerar = derrapar = frear = 0f;
+        virar = new Vector2(0,0);
     }
 
 
@@ -27,8 +27,8 @@ public class PlayerInput : MonoBehaviour
         input.Player.Direcao.performed += Virar;
         input.Player.Direcao.canceled += Virar;
 
-        //input.Player.Frear.performed += Frear;
-        //input.Player.Frear.canceled += Frear;
+        input.Player.Frear.performed += Frear;
+        input.Player.Frear.canceled += Frear;
 
         input.Player.Derrapar.performed += Derrapar;
         input.Player.Derrapar.canceled += Derrapar;
@@ -42,19 +42,19 @@ public class PlayerInput : MonoBehaviour
         input.Player.Direcao.performed -= Virar;
         input.Player.Direcao.canceled -= Virar;
 
-        //input.Player.Frear.performed -= Frear;
-        //input.Player.Frear.canceled -= Frear;
+        input.Player.Frear.performed -= Frear;
+        input.Player.Frear.canceled -= Frear;
 
         input.Player.Derrapar.performed -= Derrapar;
         input.Player.Derrapar.canceled -= Derrapar;
     }
 
-    private void Derrapar(InputAction.CallbackContext context) {inputDerrapar = context.ReadValue<float>();}
+    private void Derrapar(InputAction.CallbackContext context) {derrapar = context.ReadValue<float>();}
 
-    //private void Frear(InputAction.CallbackContext context) {inputFrear = context.ReadValue<float>();}
+    private void Frear(InputAction.CallbackContext context) {frear = context.ReadValue<float>();}
 
-    private void Virar(InputAction.CallbackContext context) {inputVirar = context.ReadValue<Vector2>();}
+    private void Virar(InputAction.CallbackContext context) {virar = context.ReadValue<Vector2>();}
 
-    private void Acelerar(InputAction.CallbackContext context) {inputAcelerar = context.ReadValue<float>();}
+    private void Acelerar(InputAction.CallbackContext context) {acelerar = context.ReadValue<float>();}
     
 }

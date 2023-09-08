@@ -135,7 +135,6 @@ GameObject:
   - component: {fileID: 277996393}
   - component: {fileID: 277996392}
   - component: {fileID: 277996395}
-  - component: {fileID: 277996396}
   m_Layer: 0
   m_Name: Triangle
   m_TagString: Untagged
@@ -156,7 +155,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 4.85
+  m_LinearDrag: 0.5
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -169,7 +168,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 0
 --- !u!212 &277996393
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -247,24 +246,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 277996391}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88ecbd90ea5235f48ad5dd9d866f33b7, type: 3}
+  m_Script: {fileID: 11500000, guid: cbcdd43e4076fd94ca79d230ea5ba400, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  centripeta: 1
---- !u!114 &277996396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 277996391}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bdda1ed383448848bd574732e41853a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aceleracao: 20
-  boost: 0
+  desaceleracao: 2.3
+  centripeta: 40
+  velocidade: 5
+  drift: 0.953
+  boost: 1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,8 +339,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
