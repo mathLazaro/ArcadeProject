@@ -10,6 +10,7 @@ public class PlayerInput : MonoBehaviour
     public static Vector2 virar;
     public static float frear;
     public static float derrapar;
+    public static float teste;
 
     private void Awake() {
         input = new InputMap();
@@ -32,6 +33,9 @@ public class PlayerInput : MonoBehaviour
 
         input.Player.Derrapar.performed += Derrapar;
         input.Player.Derrapar.canceled += Derrapar;
+
+        input.Teste.Teste.started += Teste;
+        input.Teste.Teste.canceled += Teste;
     }
 
     private void OnDisable() {
@@ -47,7 +51,12 @@ public class PlayerInput : MonoBehaviour
 
         input.Player.Derrapar.performed -= Derrapar;
         input.Player.Derrapar.canceled -= Derrapar;
+
+        input.Teste.Teste.started -= Teste;
+        input.Teste.Teste.canceled -= Teste;
     }
+
+    private void Teste(InputAction.CallbackContext context) {teste = context.ReadValue<float>();}
 
     private void Derrapar(InputAction.CallbackContext context) {derrapar = context.ReadValue<float>();}
 

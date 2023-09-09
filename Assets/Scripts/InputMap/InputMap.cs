@@ -132,6 +132,34 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""Teste"",
+            ""id"": ""3628ec73-e183-4146-9c1d-69d8c46f0ac5"",
+            ""actions"": [
+                {
+                    ""name"": ""Teste"",
+                    ""type"": ""Value"",
+                    ""id"": ""528f285a-5ac8-46ec-b08b-d64a2e8a967e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""144fd236-5827-4953-ad37-cbd314a3dc8a"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Teste"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -142,6 +170,9 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         m_Player_Acelerar = m_Player.FindAction("Acelerar", throwIfNotFound: true);
         m_Player_Frear = m_Player.FindAction("Frear", throwIfNotFound: true);
         m_Player_Derrapar = m_Player.FindAction("Derrapar", throwIfNotFound: true);
+        // Teste
+        m_Teste = asset.FindActionMap("Teste", throwIfNotFound: true);
+        m_Teste_Teste = m_Teste.FindAction("Teste", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -269,11 +300,61 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Teste
+    private readonly InputActionMap m_Teste;
+    private List<ITesteActions> m_TesteActionsCallbackInterfaces = new List<ITesteActions>();
+    private readonly InputAction m_Teste_Teste;
+    public struct TesteActions
+    {
+        private @InputMap m_Wrapper;
+        public TesteActions(@InputMap wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Teste => m_Wrapper.m_Teste_Teste;
+        public InputActionMap Get() { return m_Wrapper.m_Teste; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(TesteActions set) { return set.Get(); }
+        public void AddCallbacks(ITesteActions instance)
+        {
+            if (instance == null || m_Wrapper.m_TesteActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_TesteActionsCallbackInterfaces.Add(instance);
+            @Teste.started += instance.OnTeste;
+            @Teste.performed += instance.OnTeste;
+            @Teste.canceled += instance.OnTeste;
+        }
+
+        private void UnregisterCallbacks(ITesteActions instance)
+        {
+            @Teste.started -= instance.OnTeste;
+            @Teste.performed -= instance.OnTeste;
+            @Teste.canceled -= instance.OnTeste;
+        }
+
+        public void RemoveCallbacks(ITesteActions instance)
+        {
+            if (m_Wrapper.m_TesteActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ITesteActions instance)
+        {
+            foreach (var item in m_Wrapper.m_TesteActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_TesteActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public TesteActions @Teste => new TesteActions(this);
     public interface IPlayerActions
     {
         void OnDirecao(InputAction.CallbackContext context);
         void OnAcelerar(InputAction.CallbackContext context);
         void OnFrear(InputAction.CallbackContext context);
         void OnDerrapar(InputAction.CallbackContext context);
+    }
+    public interface ITesteActions
+    {
+        void OnTeste(InputAction.CallbackContext context);
     }
 }
