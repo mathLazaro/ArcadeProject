@@ -6,21 +6,23 @@ using Cinemachine;
 public class CameraDinamica : MonoBehaviour
 {
     [SerializeField] private float tamanhoCamera;
+    [SerializeField] private Transform transformFrente;
+    [SerializeField] private Transform transformTras;
+    [SerializeField] private Transform transformPlayer;
     private CinemachineVirtualCamera camLen;
-    //private CinemachineTransposer camPos;
+
     private void Awake() {
         camLen = GetComponent<CinemachineVirtualCamera>();
-        //camPos = GetComponent<CinemachineTransposer>();
     }
     private void Update() {
         EfeitoCam();
         OffSetCam();
-        //if(camPos == null) Debug.Log("NULL");
     }
 
     private void OffSetCam()
     {
-        //camPos.m_FollowOffset = GameManager.Instance.GetVetVel.normalized * 2f;
+        if(Vector2.Dot(transformPlayer.up,GameManager.Instance.GetVetVel) >= 0) camLen.Follow = transformFrente;
+        else camLen.Follow = transformTras;
     }
 
     private void EfeitoCam()

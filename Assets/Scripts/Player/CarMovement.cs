@@ -10,16 +10,22 @@ public class CarMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 vetorDrift;
     private Vector2 vetorVelocidade;
+    private float fatorDrift = 0.5f;
+    private bool isDrifting;
+    private bool isMovingBack;
+
+
+    #region Variaveis visíveis
 
     [SerializeField] private float desaceleracao = 1f;
     [SerializeField] private float centripeta = 50f;
     [SerializeField] private float velocidade = 5f;
+    [Range(2f,20f)] public float ajusteDirecao = 2f;
     [Range(0.8f,1f)] public float drift = 0.9f;
     [Range(1f,2.5f)] public float boost = 1f;
+    
+    #endregion
 
-    private float fatorDrift = 0.5f;
-    private bool isDrifting;
-    private bool isMovingBack;
 
     #region Unity
 
@@ -42,6 +48,7 @@ public class CarMovement : MonoBehaviour
 
     #endregion
 
+
     #region Movimentacao
     
     private void MoverFrente()
@@ -58,7 +65,7 @@ public class CarMovement : MonoBehaviour
                 rb.AddForce(boost * transform.up * velocidade * PlayerInput.acelerar ,ForceMode2D.Force);
             }
 
-            rb.MoveRotation(rb.rotation + centripeta * - PlayerInput.virar.x * Time.deltaTime * rb.velocity.magnitude);
+            rb.MoveRotation(rb.rotation + centripeta * - PlayerInput.virar.x * Time.deltaTime * (float)Math.Log(rb.velocity.magnitude+1,ajusteDirecao));
 
             // Frear
             rb.velocity -= vetorVelocidade * PlayerInput.frear * Time.deltaTime * desaceleracao;
@@ -83,7 +90,7 @@ public class CarMovement : MonoBehaviour
                 rb.AddForce(boost * transform.up * - velocidade * 0.25f * PlayerInput.frear ,ForceMode2D.Force);
             }
 
-            rb.MoveRotation(rb.rotation + centripeta * - PlayerInput.virar.x * Time.deltaTime * rb.velocity.magnitude);
+            rb.MoveRotation(rb.rotation + centripeta * - PlayerInput.virar.x * Time.deltaTime * (float)Math.Log(rb.velocity.magnitude+1,ajusteDirecao));
 
             // Frear
             rb.velocity -= vetorVelocidade * PlayerInput.acelerar * Time.deltaTime * desaceleracao;

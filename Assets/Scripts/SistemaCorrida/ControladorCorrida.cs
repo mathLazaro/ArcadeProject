@@ -26,8 +26,4 @@ public class ControladorCorrida : MonoBehaviour
         Instantiate(prefab,vetorCorrida);
     }
 
-    private void Update() {
-        
-    }
-
 }

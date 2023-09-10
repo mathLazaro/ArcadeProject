@@ -33,7 +33,8 @@ public class GameManager : MonoBehaviour
 
     private void Update() {
         Temporizador();
-        if(vida==0) gameOver = true;
+        if(vida <= 0) gameOver = true;
+        Debug.Log(vida);
     }
     #endregion
 
@@ -64,6 +65,7 @@ public class GameManager : MonoBehaviour
     public void SetCorrida(bool corrida) {this.corrida = corrida;}
     public int GetVida => vida;
     public void RedVida() {vida -= 1;}
+    public bool GetGameOver => gameOver;
 
     #endregion
 }

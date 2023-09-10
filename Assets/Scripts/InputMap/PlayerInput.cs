@@ -39,7 +39,7 @@ public class PlayerInput : MonoBehaviour
         input.Teste.Teste.started += Teste;
         input.Teste.Teste.canceled += Teste;
 
-        input.Player.Acao.performed += Acao;
+        input.Player.Acao.started += Acao;
         input.Player.Acao.canceled += Acao;
     }
 
@@ -60,7 +60,7 @@ public class PlayerInput : MonoBehaviour
         input.Teste.Teste.started -= Teste;
         input.Teste.Teste.canceled -= Teste;
 
-        input.Player.Acao.performed -= Acao;
+        input.Player.Acao.started -= Acao;
         input.Player.Acao.canceled -= Acao;
     }
 

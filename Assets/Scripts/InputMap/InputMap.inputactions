@@ -43,9 +43,9 @@
                 },
                 {
                     "name": "Acao",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "c5e7fef5-edb0-4889-9bfd-b45b3dc7dba7",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -154,6 +154,34 @@
                     "processors": "",
                     "groups": "",
                     "action": "Teste",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "18f2b917-1d59-4c03-bba5-3969117c2879",
+            "actions": [
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "d52c7ba2-882d-4f15-a9d2-9a84cbd94e3c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "58656d07-c6fd-4665-b33c-305c680275de",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
