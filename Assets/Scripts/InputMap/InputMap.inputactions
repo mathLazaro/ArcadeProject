@@ -40,6 +40,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Acao",
+                    "type": "Value",
+                    "id": "c5e7fef5-edb0-4889-9bfd-b45b3dc7dba7",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -108,6 +117,17 @@
                     "action": "Direcao",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "14b59cee-20b3-49ab-9319-78d19d7f11e7",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Acao",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

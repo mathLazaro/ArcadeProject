@@ -134,6 +134,7 @@ MonoBehaviour:
   - {fileID: 5878493031188460689, guid: 586cea5af5c071e43bb066e268221df1, type: 3}
   supDir: {fileID: 7333442250023707194}
   infEsq: {fileID: 306051129693998105}
+  chanceSpawn: 0.000797
 --- !u!1 &7333442250023707194
 GameObject:
   m_ObjectHideFlags: 0

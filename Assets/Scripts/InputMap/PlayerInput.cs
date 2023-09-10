@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,6 +12,7 @@ public class PlayerInput : MonoBehaviour
     public static float frear;
     public static float derrapar;
     public static float teste;
+    public static float acao;
 
     private void Awake() {
         input = new InputMap();
@@ -36,6 +38,9 @@ public class PlayerInput : MonoBehaviour
 
         input.Teste.Teste.started += Teste;
         input.Teste.Teste.canceled += Teste;
+
+        input.Player.Acao.performed += Acao;
+        input.Player.Acao.canceled += Acao;
     }
 
     private void OnDisable() {
@@ -54,6 +59,9 @@ public class PlayerInput : MonoBehaviour
 
         input.Teste.Teste.started -= Teste;
         input.Teste.Teste.canceled -= Teste;
+
+        input.Player.Acao.performed -= Acao;
+        input.Player.Acao.canceled -= Acao;
     }
 
     private void Teste(InputAction.CallbackContext context) {teste = context.ReadValue<float>();}
@@ -65,5 +73,7 @@ public class PlayerInput : MonoBehaviour
     private void Virar(InputAction.CallbackContext context) {virar = context.ReadValue<Vector2>();}
 
     private void Acelerar(InputAction.CallbackContext context) {acelerar = context.ReadValue<float>();}
+
+    private void Acao(InputAction.CallbackContext context) {acao = context.ReadValue<float>();}
     
 }

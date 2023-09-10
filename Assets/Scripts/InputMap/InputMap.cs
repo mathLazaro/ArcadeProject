@@ -62,6 +62,15 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Acao"",
+                    ""type"": ""Value"",
+                    ""id"": ""c5e7fef5-edb0-4889-9bfd-b45b3dc7dba7"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -130,6 +139,17 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""action"": ""Direcao"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""14b59cee-20b3-49ab-9319-78d19d7f11e7"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Acao"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -170,6 +190,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         m_Player_Acelerar = m_Player.FindAction("Acelerar", throwIfNotFound: true);
         m_Player_Frear = m_Player.FindAction("Frear", throwIfNotFound: true);
         m_Player_Derrapar = m_Player.FindAction("Derrapar", throwIfNotFound: true);
+        m_Player_Acao = m_Player.FindAction("Acao", throwIfNotFound: true);
         // Teste
         m_Teste = asset.FindActionMap("Teste", throwIfNotFound: true);
         m_Teste_Teste = m_Teste.FindAction("Teste", throwIfNotFound: true);
@@ -238,6 +259,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Acelerar;
     private readonly InputAction m_Player_Frear;
     private readonly InputAction m_Player_Derrapar;
+    private readonly InputAction m_Player_Acao;
     public struct PlayerActions
     {
         private @InputMap m_Wrapper;
@@ -246,6 +268,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         public InputAction @Acelerar => m_Wrapper.m_Player_Acelerar;
         public InputAction @Frear => m_Wrapper.m_Player_Frear;
         public InputAction @Derrapar => m_Wrapper.m_Player_Derrapar;
+        public InputAction @Acao => m_Wrapper.m_Player_Acao;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -267,6 +290,9 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
             @Derrapar.started += instance.OnDerrapar;
             @Derrapar.performed += instance.OnDerrapar;
             @Derrapar.canceled += instance.OnDerrapar;
+            @Acao.started += instance.OnAcao;
+            @Acao.performed += instance.OnAcao;
+            @Acao.canceled += instance.OnAcao;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -283,6 +309,9 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
             @Derrapar.started -= instance.OnDerrapar;
             @Derrapar.performed -= instance.OnDerrapar;
             @Derrapar.canceled -= instance.OnDerrapar;
+            @Acao.started -= instance.OnAcao;
+            @Acao.performed -= instance.OnAcao;
+            @Acao.canceled -= instance.OnAcao;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -352,6 +381,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         void OnAcelerar(InputAction.CallbackContext context);
         void OnFrear(InputAction.CallbackContext context);
         void OnDerrapar(InputAction.CallbackContext context);
+        void OnAcao(InputAction.CallbackContext context);
     }
     public interface ITesteActions
     {

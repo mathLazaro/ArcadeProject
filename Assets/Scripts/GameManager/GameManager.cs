@@ -4,29 +4,38 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private float timerJogo = 10f; // segundos
+    #region var
     private static GameManager _instance;
     public static GameManager Instance => _instance;
-    
-    // Vetor de referencia para animação
-    //private Vector3 vetorRotacaoPlayer; 
+
+    // Variáveis de controle
+    private Vector2 vetorVelocidade;
     private bool gameOver;
     private bool isAnimating;
-    private float timerCena;
+    //private float timerCena;
+    private float velocidade;
+    private bool corrida;
+
+    [SerializeField] private int vida = 5; 
+    [SerializeField] private float timerJogo = 10f; // segundos
+
+    #endregion
+
+    #region unity
 
     private void Awake() {
         if(_instance == null) _instance = this;
         else Destroy(this);
 
+        corrida = false;
         gameOver = false;
     }
 
     private void Update() {
-        timerCena = Time.timeSinceLevelLoad;
-        //Debug.Log(timerCena);
-
         Temporizador();
+        if(vida==0) gameOver = true;
     }
+    #endregion
 
     private void Temporizador()
     {
@@ -41,10 +50,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public float GetTimer => timerJogo;
+    #region getSet
+
     public void AddTimer(float add) {timerJogo += add;}
-    //public Vector3 GetVetorRot => vetorRotacaoPlayer;
-    //public void SetVetorRot(Vector3 vetor) {vetorRotacaoPlayer = vetor;}
-    public bool GetAnimating => isAnimating;
     public void SetAnimating(bool a) {isAnimating = a;}
+    public void SetVelocidade(float vel) {velocidade = vel;}
+    public float GetTimer => timerJogo;
+    public bool GetAnimating => isAnimating;
+    public float GetVelocidade => velocidade;
+    public Vector2 GetVetVel => vetorVelocidade;
+    public void SetVetVel(Vector2 vel) {vetorVelocidade = vel;}
+    public bool GetCorrida => corrida;
+    public void SetCorrida(bool corrida) {this.corrida = corrida;}
+    public int GetVida => vida;
+    public void RedVida() {vida -= 1;}
+
+    #endregion
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CarMovement : MonoBehaviour
@@ -18,29 +19,35 @@ public class CarMovement : MonoBehaviour
 
     private float fatorDrift = 0.5f;
     private bool isDrifting;
-    //private int re;
     private bool isMovingBack;
+
+    #region Unity
 
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
         isDrifting = false;
         isMovingBack = false;
-        //re = 1;
+    }
+
+    private void Update() {
+        GameManager.Instance.SetVelocidade(rb.velocity.magnitude);
+        GameManager.Instance.SetVetVel(rb.velocity);
     }
 
     private void FixedUpdate() {
         MoverFrente();
         MoverTras();
         Derrapar();
-        //GameManager.Instance.SetVetorRot(new Vector3(0f,0f,rb.rotation));
     }
 
+    #endregion
+
+    #region Movimentacao
+    
     private void MoverFrente()
     {
         if(!isMovingBack&&!GameManager.Instance.GetAnimating)
         {
-            // Andar pra frente
-
             vetorVelocidade = transform.up * Vector2.Dot(rb.velocity, transform.up);
             vetorDrift = transform.right * Vector2.Dot(rb.velocity,transform.right);
 
@@ -56,7 +63,7 @@ public class CarMovement : MonoBehaviour
             // Frear
             rb.velocity -= vetorVelocidade * PlayerInput.frear * Time.deltaTime * desaceleracao;
 
-            if(rb.velocity.magnitude <= 0.5f && Math.Sign(Vector2.Dot(rb.velocity,transform.up)) > 0 && PlayerInput.frear != 0) isMovingBack = true;
+            if(rb.velocity.magnitude <= 0.25f && Math.Sign(Vector2.Dot(rb.velocity,transform.up)) > 0 && PlayerInput.frear != 0) isMovingBack = true;
         }
         
     }
@@ -96,4 +103,6 @@ public class CarMovement : MonoBehaviour
             rb.velocity =  (vetorVelocidade + vetorDrift) * drift;
         }
     }
+    
+    #endregion
 }
