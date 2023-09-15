@@ -10,22 +10,20 @@ public class ControladorCorrida : MonoBehaviour
     [SerializeField] private GameObject prefab;
     [SerializeField] private float tempoVidaCliente = 10f;
     [SerializeField] private float tempoGanho;
-    private Transform posMiniMap;
-
-    public void UpdatePosMiniMap(Transform pos) {posMiniMap = pos;}
-    public Transform GetMiniMap => posMiniMap;
-    public float GetTempCliente => tempoVidaCliente;
+    public Transform posChegada {get; private set;}
     private Transform vetorCorrida;
+
+    public float GetTempCliente => tempoVidaCliente;
 
     private void Awake() {
         if(_instance == null) _instance = this;
-        else Destroy(this);
-        
+        else Destroy(this);  
     }
 
     public void GerarPontoChegada()
     {
         vetorCorrida = chegada[Random.Range(0,chegada.Count)];
+        posChegada = vetorCorrida;
         Instantiate(prefab,vetorCorrida);
     }
 

@@ -35,12 +35,9 @@ public class GameManager : MonoBehaviour
 
     private void Update() {
         Temporizador();
-        if(vida <= 0) gameOver = true;
-        //Debug.Log(vida);
+        if(vida <= 0 || timerJogo == 0) gameOver = true;
 
         if(isBoosting) ControleBoost();
-
-        Debug.Log(isBoosting);
     }
     #endregion
 

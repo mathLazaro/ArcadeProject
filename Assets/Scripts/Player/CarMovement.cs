@@ -39,7 +39,7 @@ public class CarMovement : MonoBehaviour
     private void Update() {
         GameManager.Instance.SetVelocidade(rb.velocity.magnitude);
         GameManager.Instance.SetVetVel(rb.velocity);
-        Debug.Log(boost);
+        //Debug.Log(boost);
     }
 
     private void FixedUpdate() {
