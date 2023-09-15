@@ -13,6 +13,7 @@ public class CarMovement : MonoBehaviour
     private float fatorDrift = 0.5f;
     private bool isDrifting;
     private bool isMovingBack;
+    private float boost = 1f;
 
 
     #region Variaveis visíveis
@@ -22,7 +23,7 @@ public class CarMovement : MonoBehaviour
     [SerializeField] private float velocidade = 5f;
     [Range(2f,20f)] public float ajusteDirecao = 2f;
     [Range(0.8f,1f)] public float drift = 0.9f;
-    [Range(1f,2.5f)] public float boost = 1f;
+    [Range(1f,2.5f)] public float aplicarBoost = 1f;
     
     #endregion
 
@@ -38,12 +39,14 @@ public class CarMovement : MonoBehaviour
     private void Update() {
         GameManager.Instance.SetVelocidade(rb.velocity.magnitude);
         GameManager.Instance.SetVetVel(rb.velocity);
+        Debug.Log(boost);
     }
 
     private void FixedUpdate() {
         MoverFrente();
         MoverTras();
         Derrapar();
+        Boost();
     }
 
     #endregion
@@ -90,7 +93,7 @@ public class CarMovement : MonoBehaviour
                 rb.AddForce(boost * transform.up * - velocidade * 0.25f * PlayerInput.frear ,ForceMode2D.Force);
             }
 
-            rb.MoveRotation(rb.rotation + centripeta * - PlayerInput.virar.x * Time.deltaTime * (float)Math.Log(rb.velocity.magnitude+1,ajusteDirecao));
+            rb.MoveRotation(rb.rotation + centripeta *  PlayerInput.virar.x * Time.deltaTime * (float)Math.Log(rb.velocity.magnitude+1,ajusteDirecao));
 
             // Frear
             rb.velocity -= vetorVelocidade * PlayerInput.acelerar * Time.deltaTime * desaceleracao;
@@ -108,6 +111,18 @@ public class CarMovement : MonoBehaviour
         if(isDrifting)
         {
             rb.velocity =  (vetorVelocidade + vetorDrift) * drift;
+        }
+    }
+
+    private void Boost()
+    {
+        if(GameManager.Instance.GetIsBoosting)
+        {
+            boost = aplicarBoost;
+        }
+        else
+        {
+            boost = 1f;
         }
     }
     

@@ -9,11 +9,13 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance => _instance;
 
     // Variáveis de controle
+    private float velocidade;
+    private float tempoBoost;
+    private float timerBoost;
     private Vector2 vetorVelocidade;
     private bool gameOver;
     private bool isAnimating;
-    //private float timerCena;
-    private float velocidade;
+    private bool isBoosting;
     private bool corrida;
 
     [SerializeField] private int vida = 5; 
@@ -34,7 +36,11 @@ public class GameManager : MonoBehaviour
     private void Update() {
         Temporizador();
         if(vida <= 0) gameOver = true;
-        Debug.Log(vida);
+        //Debug.Log(vida);
+
+        if(isBoosting) ControleBoost();
+
+        Debug.Log(isBoosting);
     }
     #endregion
 
@@ -50,22 +56,38 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
-    #region getSet
-
+    public void AddTempoBoosting(float add) {tempoBoost += add;}
     public void AddTimer(float add) {timerJogo += add;}
+    public void RedVida() {vida -= 1;}
+    private void ControleBoost()
+    {
+        if(Time.time > timerBoost + tempoBoost)
+        {
+            isBoosting = false;
+            tempoBoost = 0f;
+        }
+    }
+    public void InicioBoost()
+    {
+        timerBoost = Time.time;
+        isBoosting = true;
+    }
+
+    #region GetSet
+
     public void SetAnimating(bool a) {isAnimating = a;}
     public void SetVelocidade(float vel) {velocidade = vel;}
+    public void SetVetVel(Vector2 vel) {vetorVelocidade = vel;}
+    public void SetCorrida(bool corrida) {this.corrida = corrida;}
     public float GetTimer => timerJogo;
     public bool GetAnimating => isAnimating;
     public float GetVelocidade => velocidade;
     public Vector2 GetVetVel => vetorVelocidade;
-    public void SetVetVel(Vector2 vel) {vetorVelocidade = vel;}
     public bool GetCorrida => corrida;
-    public void SetCorrida(bool corrida) {this.corrida = corrida;}
     public int GetVida => vida;
-    public void RedVida() {vida -= 1;}
     public bool GetGameOver => gameOver;
+    public bool GetIsBoosting =>isBoosting;
+
 
     #endregion
 }

@@ -10,7 +10,10 @@ public class ControladorCorrida : MonoBehaviour
     [SerializeField] private GameObject prefab;
     [SerializeField] private float tempoVidaCliente = 10f;
     [SerializeField] private float tempoGanho;
-    //public float GetTempoGanho => tempoGanho;
+    private Transform posMiniMap;
+
+    public void UpdatePosMiniMap(Transform pos) {posMiniMap = pos;}
+    public Transform GetMiniMap => posMiniMap;
     public float GetTempCliente => tempoVidaCliente;
     private Transform vetorCorrida;
 

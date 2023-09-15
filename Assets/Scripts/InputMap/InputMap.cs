@@ -193,6 +193,15 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Iniciar"",
+                    ""type"": ""Button"",
+                    ""id"": ""46453dfd-42e5-45e7-9e87-a60c2e165652"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -204,6 +213,17 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f6e38563-7fb0-474a-aaaf-b6359e344a63"",
+                    ""path"": ""<Keyboard>/anyKey"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Iniciar"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -225,6 +245,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
+        m_UI_Iniciar = m_UI.FindAction("Iniciar", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -411,11 +432,13 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_UI;
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
     private readonly InputAction m_UI_Pause;
+    private readonly InputAction m_UI_Iniciar;
     public struct UIActions
     {
         private @InputMap m_Wrapper;
         public UIActions(@InputMap wrapper) { m_Wrapper = wrapper; }
         public InputAction @Pause => m_Wrapper.m_UI_Pause;
+        public InputAction @Iniciar => m_Wrapper.m_UI_Iniciar;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -428,6 +451,9 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
+            @Iniciar.started += instance.OnIniciar;
+            @Iniciar.performed += instance.OnIniciar;
+            @Iniciar.canceled += instance.OnIniciar;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -435,6 +461,9 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
+            @Iniciar.started -= instance.OnIniciar;
+            @Iniciar.performed -= instance.OnIniciar;
+            @Iniciar.canceled -= instance.OnIniciar;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -467,5 +496,6 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
     public interface IUIActions
     {
         void OnPause(InputAction.CallbackContext context);
+        void OnIniciar(InputAction.CallbackContext context);
     }
 }
