@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     private bool isAnimating;
     private bool isBoosting;
     private bool corrida;
+    public Vector3 playerPos {set; get;}
 
     [SerializeField] private int vida = 5; 
     [SerializeField] private float timerJogo = 10f; // segundos

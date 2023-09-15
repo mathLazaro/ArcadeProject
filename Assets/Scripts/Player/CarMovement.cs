@@ -39,7 +39,7 @@ public class CarMovement : MonoBehaviour
     private void Update() {
         GameManager.Instance.SetVelocidade(rb.velocity.magnitude);
         GameManager.Instance.SetVetVel(rb.velocity);
-        //Debug.Log(boost);
+        GameManager.Instance.playerPos = transform.position;
     }
 
     private void FixedUpdate() {
@@ -98,6 +98,7 @@ public class CarMovement : MonoBehaviour
             // Frear
             rb.velocity -= vetorVelocidade * PlayerInput.acelerar * Time.deltaTime * desaceleracao;
 
+            // Mudar essa porcaria aqgui |||
             if(rb.velocity.magnitude <= 0.5f && Math.Sign(Vector2.Dot(rb.velocity,transform.up)) < 0 && PlayerInput.acelerar != 0) isMovingBack = false;
         
         }
