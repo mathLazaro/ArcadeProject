@@ -5,10 +5,9 @@ using UnityEngine;
 public class Carro : MonoBehaviour
 {
     private Vector3 destino;
+    //private Vector3 vetorVel;
     [SerializeField] private List<Sprite> sprites;
-    [SerializeField] private Transform referencia;
     [SerializeField] private Transform car;
-    private float rotacao;
     private List<Transform> esquina;
     private int idx;
     //private Rigidbody2D rb;
@@ -21,7 +20,7 @@ public class Carro : MonoBehaviour
 
     private void Start() {
         gameObject.GetComponentInChildren<SpriteRenderer>().sprite = sprites[UnityEngine.Random.Range(0,sprites.Count)];
-        //rb.GetComponentInChildren<Rigidbody2D>();
+        Rotacionar();
     }
 
     private void Update() {
@@ -32,16 +31,18 @@ public class Carro : MonoBehaviour
             if(idx == esquina.Count-1) idx=0;
             else idx += 1;
             destino = esquina[idx].position;
+            Rotacionar();
         }
     }
 
     private void Mover()
     {
         transform.position += (destino - transform.position).normalized * Time.deltaTime;
+    }
 
-        rotacao = Vector2.SignedAngle(referencia.localPosition,gameObject.GetComponentInChildren<Rigidbody2D>().velocity);
-
-        car.transform.eulerAngles = new Vector3(0,0,rotacao);
-
+    private void Rotacionar()
+    {
+        var rotacao = Vector2.SignedAngle(Vector2.up,destino-transform.position);
+        GetComponent<Rigidbody2D>().rotation = rotacao;
     }
 }
