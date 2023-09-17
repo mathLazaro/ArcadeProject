@@ -12,6 +12,7 @@ public class ControladorCorrida : MonoBehaviour
     [SerializeField] private float tempoGanho;
     public Transform posChegada {get; private set;}
     private Transform vetorCorrida;
+    //public Color corCliente
 
     public float GetTempCliente => tempoVidaCliente;
 
