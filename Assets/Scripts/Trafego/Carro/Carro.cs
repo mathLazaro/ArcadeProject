@@ -1,9 +1,10 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Carro : MonoBehaviour
 {
+    public  bool crashed {get; set;}
     private Vector3 destino;
     //private Vector3 vetorVel;
     [SerializeField] private List<Sprite> sprites;
@@ -16,6 +17,7 @@ public class Carro : MonoBehaviour
         destino = esquina[idx].position;
         this.esquina = esquina;
         this.idx = idx;
+        crashed = false;
     }
 
     private void Start() {
@@ -24,14 +26,21 @@ public class Carro : MonoBehaviour
     }
 
     private void Update() {
-        Mover();
-
-        if(Math.Round((transform.position - destino).magnitude)==0)
+        if(!crashed)
         {
-            if(idx == esquina.Count-1) idx=0;
-            else idx += 1;
-            destino = esquina[idx].position;
-            Rotacionar();
+            Mover();
+
+            if(System.Math.Round((transform.position - destino).magnitude)==0)
+            {
+                if(idx == esquina.Count-1) idx=0;
+                else idx += 1;
+                destino = esquina[idx].position;
+                Rotacionar();
+            }
+        }
+        else
+        {
+            StartCoroutine(Destruir());
         }
     }
 
@@ -44,5 +53,11 @@ public class Carro : MonoBehaviour
     {
         var rotacao = Vector2.SignedAngle(Vector2.up,destino-transform.position);
         GetComponent<Rigidbody2D>().rotation = rotacao;
+    }
+
+    IEnumerator Destruir()
+    {
+        yield return new WaitForSeconds(3f);
+        Destroy(gameObject);
     }
 }
