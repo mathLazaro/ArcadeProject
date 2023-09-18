@@ -28,7 +28,7 @@ public class ControladorTrafego : MonoBehaviour
 
         AleatorizarSpawn();
 
-
+        //if()
         Carro _carro = Instantiate(obejtoCarro,vetorSpawn,new Quaternion(0f,0f,0f,0f));
         _carro.Iniciar(esquina,rand);
 
